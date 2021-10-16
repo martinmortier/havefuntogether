@@ -17,10 +17,10 @@ function MyApp({
 }: MyAppProps) {
   return (
     <CacheProvider value={emotionCache}>
-      {/* <ThemeProvider theme={theme}> */}
-      <CssBaseline />
-      <Component {...pageProps} />
-      {/* </ThemeProvider> */}
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Component {...pageProps} />
+      </ThemeProvider>
     </CacheProvider>
   )
 }

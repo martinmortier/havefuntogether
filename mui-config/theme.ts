@@ -1,17 +1,16 @@
 import { createTheme } from "@mui/material/styles"
 import { red } from "@mui/material/colors"
 
-// Create a theme instance.
+const purple = "#2A1D6A"
+
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#556cd6",
+      main: purple,
     },
     secondary: {
-      main: "#19857b",
-    },
-    error: {
-      main: red.A400,
+      main: "#e6effc",
+      contrastText: purple,
     },
   },
 })
