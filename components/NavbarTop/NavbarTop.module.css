@@ -1,32 +1,41 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@500&display=swap");
 .container {
   display: flex;
-  /* justify-content: center; */
   align-items: center;
   padding: 0.5rem 1rem;
-  /* background-color: #fff; */
-  background-color: rgb(195, 27, 27);
   border-bottom: 1px solid #e5e5e5;
   flex-wrap: wrap;
 }
 
-.LeftPanel {
+.leftPanel {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+
+.leftPanelText {
+  color: #2a1d6a;
+  font-weight: bold;
+  font-size: 1.7rem;
+  font-family: "Oswald", sans-serif;
+  padding-left: 5rem;
+}
+
+.icon {
+  font-size: 2.5rem;
+}
+
+.rightPanel {
   flex-grow: 1;
 }
 
-.RightPanel {
-  flex-grow: 1;
-}
-
-.LoginPanel {
+.loginPanel {
   display: flex;
   justify-content: flex-end;
 }
-.text {
-  color: #8c87a8;
-}
 
-.test {
-  color: green;
-  width: 150%;
-  height: 150%;
+.buttonStyle {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  font-size: 1.1rem;
+  box-shadow: 5px 5px 50px #8c87a8;
 }
