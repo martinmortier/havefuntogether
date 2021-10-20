@@ -1,10 +1,8 @@
 import type { NextPage } from "next"
 import Head from "next/head"
-import Image from "next/image"
-import styles from "../styles/Home.module.css"
-import Button from "@mui/material/Button"
 import { useUser } from "@auth0/nextjs-auth0"
 import React from "react"
+import Home from "../components/Home/Home"
 export function Profile() {
   const { user, error, isLoading } = useUser()
 
@@ -21,17 +19,15 @@ export function Profile() {
     )
   )
 }
-const Home: NextPage = () => {
+const Index: NextPage = () => {
   return (
     <div>
       <Head>
         <title>Create Next App</title>
       </Head>
-      <a href="/api/auth/login">Login</a>
-      <a href="/api/auth/logout">Log out</a>
-      {Profile()}
+      <Home />
     </div>
   )
 }
 
-export default Home
+export default Index
