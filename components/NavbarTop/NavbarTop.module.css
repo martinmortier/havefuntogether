@@ -1,3 +1,32 @@
+.container {
+  display: flex;
+  /* justify-content: center; */
+  align-items: center;
+  padding: 0.5rem 1rem;
+  /* background-color: #fff; */
+  background-color: rgb(195, 27, 27);
+  border-bottom: 1px solid #e5e5e5;
+  flex-wrap: wrap;
+}
+
+.LeftPanel {
+  flex-grow: 1;
+}
+
+.RightPanel {
+  flex-grow: 1;
+}
+
+.LoginPanel {
+  display: flex;
+  justify-content: flex-end;
+}
 .text {
   color: #8c87a8;
+}
+
+.test {
+  color: green;
+  width: 150%;
+  height: 150%;
 }
