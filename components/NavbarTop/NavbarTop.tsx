@@ -24,6 +24,9 @@ const NavbarTop = (): JSX.Element => {
             {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
             <a href="/api/auth/login">Sign In</a>
           </Button>
+          <Button>
+            <a href="/api/auth/logout">Logout</a>
+          </Button>
         </div>
       </div>
     </div>
