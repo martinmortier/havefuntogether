@@ -3,7 +3,6 @@ import Head from "next/head"
 import { useUser } from "@auth0/nextjs-auth0"
 import React, { useEffect } from "react"
 import Home from "../components/Home/Home"
-import { getCookieByName } from "../helpers/cookie"
 export function Profile() {
   const { user, error, isLoading } = useUser()
 
@@ -21,10 +20,6 @@ export function Profile() {
   )
 }
 const Index: NextPage = () => {
-  useEffect(() => {
-    getCookieByName("value")
-    console.log("ici")
-  }, [])
   return (
     <div>
       <Head>
