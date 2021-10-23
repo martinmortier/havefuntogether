@@ -1,20 +1,18 @@
 import styles from "../NavbarTop/NavbarTop.module.css"
 import NavbarTopMenuItem from "../NavbarTopMenuItem/NavbarTopMenuItem"
 import Button from "@mui/material/Button"
-import { MdOutlineWavingHand } from "react-icons/md"
 import { useUser } from "@auth0/nextjs-auth0"
 import Image from "next/image"
 import Link from "next/link"
+import LogoName from "../LogoName/LogoName"
+
 const NavbarTop = (): JSX.Element => {
   const { user } = useUser()
   return (
     <div className={styles.container}>
       <div className={styles.leftPanel}>
-        <div className={styles.leftPanelText}>
-          <span className={styles.iconContainer}>
-            <MdOutlineWavingHand className={styles.icon} />
-          </span>{" "}
-          Havefuntogether
+        <div className={styles.leftPanelIconText}>
+          <LogoName />
         </div>
       </div>
       <div>

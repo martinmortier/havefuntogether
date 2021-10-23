@@ -12,16 +12,8 @@
   flex-basis: 0;
 }
 
-.leftPanelText {
-  color: #2a1d6a;
-  font-weight: bold;
-  font-size: 1.7rem;
-  font-family: "Oswald", sans-serif;
+.leftPanelIconText {
   padding-left: 5rem;
-}
-
-.icon {
-  font-size: 2.5rem;
 }
 
 .rightPanel {
