@@ -35,7 +35,12 @@ const NavbarTop = (): JSX.Element => {
           </Button>
         ) : (
           <>
-            <Image src={`${user.picture}`} width={64} height={64} />
+            <Image
+              src={`${user.picture}`}
+              alt="User's picture"
+              width={64}
+              height={64}
+            />
             <Button>
               <a href="/api/auth/logout">Logout</a>
             </Button>
