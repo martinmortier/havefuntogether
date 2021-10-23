@@ -7,17 +7,13 @@
   flex-wrap: wrap;
 }
 
-.leftPanel {
+.links {
   flex-grow: 1;
-  flex-basis: 0;
+  text-align: center;
 }
 
 .leftPanelIconText {
   padding-left: 5rem;
-}
-
-.rightPanel {
-  flex-grow: 1;
 }
 
 .loginPanel {

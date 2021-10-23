@@ -10,41 +10,37 @@ const NavbarTop = (): JSX.Element => {
   const { user } = useUser()
   return (
     <div className={styles.container}>
-      <div className={styles.leftPanel}>
-        <div className={styles.leftPanelIconText}>
-          <LogoName />
-        </div>
+      <div className={styles.leftPanelIconText}>
+        <LogoName />
       </div>
-      <div>
+      <div className={styles.links}>
         <NavbarTopMenuItem text="Home" icon={true} />
         <NavbarTopMenuItem text="About" icon={true} />
         <NavbarTopMenuItem text="Contact" icon={true} />
-      </div>
-      {user && (
-        <div>
-          <Button variant="outlined">
-            <Link href="/dashboard">
-              <a>Dashboard</a>
-            </Link>
-          </Button>
-        </div>
-      )}
-      <div className={styles.rightPanel}>
-        <div className={styles.loginPanel}>
-          {!user ? (
-            <Button className={styles.buttonStyle} variant="contained">
-              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-              <a href="/api/auth/login">Sign In</a>
+        {user && (
+          <>
+            <Button variant="outlined">
+              <Link href="/dashboard">
+                <a>Dashboard</a>
+              </Link>
             </Button>
-          ) : (
-            <>
-              <Image src={`${user.picture}`} width={64} height={64} />
-              <Button>
-                <a href="/api/auth/logout">Logout</a>
-              </Button>
-            </>
-          )}
-        </div>
+          </>
+        )}
+      </div>
+      <div className={styles.loginPanel}>
+        {!user ? (
+          <Button className={styles.buttonStyle} variant="contained">
+            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+            <a href="/api/auth/login">Sign In</a>
+          </Button>
+        ) : (
+          <>
+            <Image src={`${user.picture}`} width={64} height={64} />
+            <Button>
+              <a href="/api/auth/logout">Logout</a>
+            </Button>
+          </>
+        )}
       </div>
     </div>
   )
