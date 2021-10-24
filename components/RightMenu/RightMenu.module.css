@@ -2,13 +2,10 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  border-right: 0.2rem solid;
+  border-left: 0.2rem solid;
   border-color: #e6effb;
   text-align: center;
   height: 90vh;
-  flex-basis: 15%;
+  width: 20vw;
   margin-top: 5vh;
-}
-.h2 {
-  text-transform: uppercase;
 }
