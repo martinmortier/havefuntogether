@@ -12,8 +12,9 @@ interface Message {
 const Chat = (): JSX.Element => {
   const { user } = useUser()
   const [messages, setMessages] = useState<Array<Message>>([])
-  const [newMessage, setUserMessage] = useState<string>("")
-  const socket = io("http://localhost:3001/")
+  const [newMessage, setNewMessage] = useState<string>("")
+  const url = process.env.NODE_ENV === "test" ? "" : "http://localhost:3001/"
+  const socket = io(url)
 
   //TODO:Test it
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
@@ -27,13 +28,14 @@ const Chat = (): JSX.Element => {
       setMessages(messages.concat(message))
       socket.emit("chat message", message)
       socketDisconnect()
+      setNewMessage("")
     }
   }
 
   const handleChange = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    setUserMessage(event.target.value)
+    setNewMessage(event.target.value)
   }
 
   socket.on("chat message", (msg: Message) => {
@@ -56,11 +58,17 @@ const Chat = (): JSX.Element => {
         messages.map((msg: Message, index) => (
           <div key={index}>
             <p>{msg.nickname}</p>
-            <p>{msg.content}</p>
+            <p>Message: {msg.content}</p>
           </div>
         ))}
       <form onSubmit={handleSubmit}>
-        <TextField type="text" onChange={handleChange} sx={{ width: "100%" }} />{" "}
+        <TextField
+          type="text"
+          onChange={handleChange}
+          placeholder="Type a message..."
+          value={newMessage}
+          sx={{ width: "100%" }}
+        />{" "}
         <br />
         <Button variant="contained" type="submit" sx={{ width: "100%" }}>
           Send
