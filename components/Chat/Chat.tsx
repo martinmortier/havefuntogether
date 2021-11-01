@@ -16,7 +16,6 @@ const Chat = (): JSX.Element => {
   const url = process.env.NODE_ENV === "test" ? "" : "http://localhost:3001/"
   const socket = io(url)
 
-  //TODO:Test it
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
     if (user && user.name) {
