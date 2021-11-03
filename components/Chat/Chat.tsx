@@ -18,7 +18,7 @@ const Chat = (): JSX.Element => {
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
     event.preventDefault()
-    if (user && user.name) {
+    if (user && user.name && newMessage) {
       const message: Message = {
         nickname: user.name,
         content: newMessage,
