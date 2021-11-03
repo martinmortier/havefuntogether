@@ -12,21 +12,30 @@ const CreateEvent = () => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    switch (e.target.value) {
-      case "":
+    switch (e.target.id) {
+      case "name":
+        setName(e.target.value)
+        break
+      case "date":
+        setDate(e.target.value)
+        break
+      case "place":
+        setPlace(e.target.value)
+        break
       default:
-        throw new Error("Event target not found")
+        console.log("value", e.target.id)
+        throw new Error("Event id not found")
     }
   }
   return (
     <div>
       <form onSubmit={handleSubmit}>
         <p>Name:</p>
-        <Input id="test" type="text" onChange={(e) => handleChange(e)} />
+        <Input id="name" type="text" onChange={(e) => handleChange(e)} />
         <p>Date: </p>
-        <Input type="date" />
+        <Input id="date" type="date" onChange={(e) => handleChange(e)} />
         <p>Place</p>
-        <Input type="text" />
+        <Input type="place" onChange={(e) => handleChange(e)} />
         {/* TODO:Add google map API */}
         <Button>Create</Button>
       </form>
