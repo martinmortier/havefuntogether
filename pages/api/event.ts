@@ -1,23 +1,28 @@
-import { PrismaClient, Event } from ".prisma/client"
+import { Prisma, PrismaClient, Event } from ".prisma/client"
 import { NextApiRequest, NextApiResponse } from "next"
 
 const prisma = new PrismaClient()
 
+type EventType = Prisma.EventCreateInput | Event[]
+
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<Event | Event[]>
+  res: NextApiResponse<EventType>
 ) {
-  const { name, place } = req.body
+  console.log(req.body)
   if (req.method === "POST") {
-    const newEvent = await prisma.event.create({
+    const { name, place, startDate, endDate } = req.body
+    const newEvent: EventType = await prisma.event.create({
       data: {
-        name: "Event2",
-        place: "place",
+        name: name,
+        place: place,
+        startDate: startDate,
+        endDate: endDate,
       },
     })
     res.status(200).json(newEvent)
   } else if ((req.method = "GET")) {
-    const events = await prisma.event.findMany()
+    const events: EventType = await prisma.event.findMany()
     res.status(200).json(events)
   }
 }
