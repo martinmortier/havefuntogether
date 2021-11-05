@@ -1,0 +1,24 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-content: center;
+  height: 100vh;
+  justify-content: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  width: 50%;
+  height: 50%;
+  border: 2px solid black;
+  padding: 30px;
+  justify-content: center;
+  align-content: center;
+}
+
+.form > div {
+  padding: 15px;
+}

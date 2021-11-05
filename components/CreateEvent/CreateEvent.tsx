@@ -1,4 +1,5 @@
-import { Autocomplete, Button, TextField, TextFieldProps } from "@mui/material"
+import styles from "./CreateEvent.module.css"
+import { Button, TextField, TextFieldProps } from "@mui/material"
 import { ChangeEvent, FormEvent, useState } from "react"
 import axios from "axios"
 import DateAdapter from "@mui/lab/AdapterMoment"
@@ -11,39 +12,6 @@ const CreateEvent = () => {
   const [endDate, setEndDate] = useState<Date | null>(new Date())
   const [place, setPlace] = useState<string>("")
 
-  const top100Films = [
-    { title: "The Shawshank Redemption", year: 1994 },
-    { title: "The Godfather", year: 1972 },
-    { title: "The Godfather: Part II", year: 1974 },
-    { title: "The Dark Knight", year: 2008 },
-    { title: "12 Angry Men", year: 1957 },
-    { title: "Schindler's List", year: 1993 },
-    { title: "Pulp Fiction", year: 1994 },
-    {
-      title: "The Lord of the Rings: The Return of the King",
-      year: 2003,
-    },
-    { title: "The Good, the Bad and the Ugly", year: 1966 },
-    { title: "Fight Club", year: 1999 },
-    {
-      title: "The Lord of the Rings: The Fellowship of the Ring",
-      year: 2001,
-    },
-    {
-      title: "Star Wars: Episode V - The Empire Strikes Back",
-      year: 1980,
-    },
-    { title: "Forrest Gump", year: 1994 },
-    { title: "Inception", year: 2010 },
-    {
-      title: "The Lord of the Rings: The Two Towers",
-      year: 2002,
-    },
-    { title: "One Flew Over the Cuckoo's Nest", year: 1975 },
-    { title: "Goodfellas", year: 1990 },
-    { title: "The Matrix", year: 1999 },
-    { title: "Seven Samurai", year: 1954 },
-  ]
   //TODO:Test API
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
@@ -66,7 +34,6 @@ const CreateEvent = () => {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ): void => {
-    console.log(e.target.id)
     switch (e.target.id) {
       case "name":
         setName(e.target.value)
@@ -79,8 +46,8 @@ const CreateEvent = () => {
     }
   }
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <div className={styles.container}>
+      <form onSubmit={handleSubmit} className={styles.form}>
         <TextField
           id="name"
           label="Event name"
@@ -113,7 +80,9 @@ const CreateEvent = () => {
           variant="standard"
           onChange={handleChange}
         />
-        <Button type="submit">Create</Button>
+        <Button type="submit" variant="contained">
+          Create
+        </Button>
       </form>
     </div>
   )
