@@ -44,7 +44,7 @@ const CreateEvent = () => {
     { title: "The Matrix", year: 1999 },
     { title: "Seven Samurai", year: 1954 },
   ]
-
+  //TODO:Test API
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     if (startDate && endDate) {
@@ -56,9 +56,9 @@ const CreateEvent = () => {
         endDate: endDate,
       }
       try {
-        const response = await axios.post("/api/event", newEvent)
+        await axios.post("/api/event", newEvent)
       } catch (error: unknown) {
-        throw new Error(JSON.stringify(error))
+        throw new Error(`${error}`)
       }
     }
   }
