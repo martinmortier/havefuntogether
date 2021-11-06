@@ -1,5 +1,5 @@
 import styles from "./CreateEvent.module.css"
-import { Button, TextField, Alert } from "@mui/material"
+import { Button, TextField, Alert, AlertColor } from "@mui/material"
 import { ChangeEvent, FormEvent, useState } from "react"
 import axios from "axios"
 import DateAdapter from "@mui/lab/AdapterMoment"
@@ -11,12 +11,12 @@ const CreateEvent = () => {
   const [startDate, setStartDate] = useState<Date | null>(null)
   const [endDate, setEndDate] = useState<Date | null>(null)
   const [place, setPlace] = useState<string>("")
-  const [alert, setAlert] = useState<string>("")
+  const [alert, setAlert] = useState<AlertColor | undefined>(undefined)
 
-  const displayHideAlert = (state: string) => {
+  const displayHideAlert = (state: AlertColor) => {
     setAlert(state)
     const seconds = 5000
-    setTimeout(() => setAlert(""), seconds)
+    setTimeout(() => setAlert(undefined), seconds)
   }
 
   //TODO:Test API
