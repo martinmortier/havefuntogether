@@ -1,5 +1,5 @@
 import styles from "./CreateEvent.module.css"
-import { Button, TextField, TextFieldProps } from "@mui/material"
+import { Button, TextField, Alert } from "@mui/material"
 import { ChangeEvent, FormEvent, useState } from "react"
 import axios from "axios"
 import DateAdapter from "@mui/lab/AdapterMoment"
@@ -8,9 +8,16 @@ import { Event } from ".prisma/client"
 
 const CreateEvent = () => {
   const [name, setName] = useState<string>("")
-  const [startDate, setStartDate] = useState<Date | null>(new Date())
-  const [endDate, setEndDate] = useState<Date | null>(new Date())
+  const [startDate, setStartDate] = useState<Date | null>(null)
+  const [endDate, setEndDate] = useState<Date | null>(null)
   const [place, setPlace] = useState<string>("")
+  const [alert, setAlert] = useState<string>("")
+
+  const displayHideAlert = (state: string) => {
+    setAlert(state)
+    const seconds = 5000
+    setTimeout(() => setAlert(""), seconds)
+  }
 
   //TODO:Test API
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
@@ -25,9 +32,12 @@ const CreateEvent = () => {
       }
       try {
         await axios.post("/api/event", newEvent)
+        displayHideAlert("success")
       } catch (error: unknown) {
-        throw new Error(`${error}`)
+        displayHideAlert("error")
       }
+    } else {
+      displayHideAlert("error")
     }
   }
 
@@ -83,6 +93,7 @@ const CreateEvent = () => {
         <Button type="submit" variant="contained">
           Create
         </Button>
+        {alert && <Alert severity={alert}>{alert}</Alert>}
       </form>
     </div>
   )
