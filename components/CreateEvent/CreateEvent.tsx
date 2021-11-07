@@ -1,5 +1,5 @@
 import styles from "./CreateEvent.module.css"
-import { Button, TextField, Alert, AlertColor } from "@mui/material"
+import { Button, TextField, Alert, AlertColor, Typography } from "@mui/material"
 import { ChangeEvent, FormEvent, useState } from "react"
 import axios from "axios"
 import DateAdapter from "@mui/lab/AdapterMoment"
@@ -58,6 +58,7 @@ const CreateEvent = () => {
   return (
     <div className={styles.container}>
       <form onSubmit={handleSubmit} className={styles.form}>
+        <Typography variant="subtitle1">Create a new event ! </Typography>
         <TextField
           id="name"
           label="Event name"
