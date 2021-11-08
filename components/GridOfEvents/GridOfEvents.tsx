@@ -48,7 +48,7 @@ export const getColumnsFromObject = (event: Event): GridColDef[] => {
   }))
   return columns
 }
-
+//TODO: Need to be tested
 export const getRowsFromObject = (events: Event[]): GridRowsProp => {
   const rows: GridRowsProp = events.map((event: Event, index) => ({
     id: index,

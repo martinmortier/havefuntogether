@@ -1,5 +1,4 @@
 // import "@testing-library/jest-dom/extend-expect"
-//TODO: Refactor for add testing library
 module.exports = {
   collectCoverageFrom: [
     "**/*.{js,jsx,ts,tsx}",
