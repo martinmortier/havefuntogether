@@ -1,7 +1,7 @@
 import { nodeModuleNameResolver } from "typescript"
 import { getColumnsFromObject } from "../GridOfEvents"
 describe("GridOfEvents tests", () => {
-  test("Convert the object key in grid column", () => {
+  test("Convert the keys of the object in a grid column", () => {
     const object = {
       name: "Column 1",
       place: "Place 1",
