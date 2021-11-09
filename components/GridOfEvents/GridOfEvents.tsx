@@ -1,16 +1,17 @@
 import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid"
-import { useEffect, useState } from "react"
+import { Button } from "@mui/material"
+import { Dispatch, useEffect, useState } from "react"
 import axios, { AxiosResponse } from "axios"
 import { Event } from ".prisma/client"
 import moment from "moment"
 type GridOfEventsProps = {
   apiURL: string
+  setCurrentComponent: Dispatch<string>
 }
-const GridOfEvents = ({ apiURL }: GridOfEventsProps) => {
+const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
   const [data, setData] = useState<Event[]>()
   const [columns, setColumns] = useState<GridColDef[]>()
   const [rows, setRows] = useState<GridRowsProp>()
-  apiURL = "/api/event"
 
   const getData = async () => {
     try {
@@ -34,7 +35,17 @@ const GridOfEvents = ({ apiURL }: GridOfEventsProps) => {
     getData()
   }, [apiURL])
   // return <> </>
-  return <div>{displayDataGrid()}</div>
+  return (
+    <div>
+      <Button
+        variant="contained"
+        onClick={() => setCurrentComponent("CreateEvent")}
+      >
+        Create a new event
+      </Button>
+      {displayDataGrid()}
+    </div>
+  )
 }
 
 export default GridOfEvents
