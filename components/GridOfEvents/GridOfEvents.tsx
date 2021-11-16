@@ -30,7 +30,7 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
       console.log(error)
     }
   }
-
+  //TODO: Add a react hook
   const displayDataGrid = () => {
     if (rows && columns) {
       return (

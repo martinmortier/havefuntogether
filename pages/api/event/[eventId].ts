@@ -17,4 +17,14 @@ export default async function handler(
     })
     res.status(200).json(event)
   }
+  if (req.method === "DELETE") {
+    const { eventId } = req.query
+    const id = Number(eventId)
+    const event = await prisma.event.delete({
+      where: {
+        idEvent: id,
+      },
+    })
+    res.status(200).json(`Event with id: ${id} is deleted`)
+  }
 }
