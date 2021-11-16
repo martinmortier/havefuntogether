@@ -31,12 +31,26 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
       return <DataGrid rows={rows} columns={columns} />
     }
   }
+
+  const deleteEvents = async (eventsId: number[]): Promise<void> => {
+    if (eventsId.length === 0) return
+    eventsId.map(async (id: number) => {
+      const response = await axios.delete(`${apiURL}/${id}`)
+    })
+  }
+
   useEffect(() => {
     getData()
   }, [apiURL])
   // return <> </>
   return (
     <div>
+      <Button
+        variant="contained"
+        onClick={() => setCurrentComponent("CreateEvent")}
+      >
+        Create a new event
+      </Button>
       <Button
         variant="contained"
         onClick={() => setCurrentComponent("CreateEvent")}

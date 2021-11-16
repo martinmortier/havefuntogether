@@ -24,7 +24,7 @@ export default async function handler(
     } catch (error) {
       res.status(500).json(`${error}`)
     }
-  } else if ((req.method = "GET")) {
+  } else if (req.method === "GET") {
     const events: EventType = await prisma.event.findMany()
     res.status(200).json(events)
   }
