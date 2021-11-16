@@ -1,4 +1,9 @@
-import { DataGrid, GridColDef, GridRowsProp } from "@mui/x-data-grid"
+import {
+  DataGrid,
+  GridColDef,
+  GridRowsProp,
+  GridSelectionModel,
+} from "@mui/x-data-grid"
 import { Button } from "@mui/material"
 import { Dispatch, useEffect, useState } from "react"
 import axios, { AxiosResponse } from "axios"
@@ -12,7 +17,7 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
   const [data, setData] = useState<Event[]>()
   const [columns, setColumns] = useState<GridColDef[]>()
   const [rows, setRows] = useState<GridRowsProp>()
-
+  const [selectionModel, setSelectionModel] = useState<GridSelectionModel>()
   const getData = async () => {
     try {
       const response: AxiosResponse = await axios.get(apiURL)
@@ -28,14 +33,41 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
 
   const displayDataGrid = () => {
     if (rows && columns) {
-      return <DataGrid rows={rows} columns={columns} />
+      return (
+        <div style={{ display: "flex", height: 550 }}>
+          <div style={{ flexGrow: 1 }}>
+            <DataGrid
+              rows={rows}
+              columns={columns}
+              checkboxSelection
+              selectionModel={selectionModel}
+              onSelectionModelChange={(newSelectionModel: GridSelectionModel) =>
+                setSelectionModel(newSelectionModel)
+              }
+            />
+          </div>
+        </div>
+      )
+    }
+  }
+  // TODO:Test it
+  const deleteEvent = async (eventId: number): Promise<void> => {
+    if (!eventId) return
+    try {
+      const response = await axios.delete(`${apiURL}/${eventId}`)
+      console.log(response.data)
+    } catch (error: unknown) {
+      console.log(error)
     }
   }
 
-  const deleteEvents = async (eventsId: number[]): Promise<void> => {
-    if (eventsId.length === 0) return
-    eventsId.map(async (id: number) => {
-      const response = await axios.delete(`${apiURL}/${id}`)
+  const handleDelete = (selection: GridSelectionModel | undefined): void => {
+    if (selection === undefined || selection.length === 0) return
+    const selectionNumber: Array<number> = selection as Array<number>
+    selectionNumber.map((id: number) => {
+      if (rows === undefined || rows.length === 0) return
+      const event: Event = rows[id] as Event
+      deleteEvent(event.idEvent)
     })
   }
 
@@ -51,11 +83,8 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
       >
         Create a new event
       </Button>
-      <Button
-        variant="contained"
-        onClick={() => setCurrentComponent("CreateEvent")}
-      >
-        Create a new event
+      <Button variant="contained" onClick={() => handleDelete(selectionModel)}>
+        Delete event(s) selected
       </Button>
       {displayDataGrid()}
     </div>

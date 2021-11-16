@@ -19,7 +19,7 @@ const CreateEvent = () => {
     setTimeout(() => setAlert(undefined), seconds)
   }
 
-  //TODO:Test API
+  //TODO:Test API + Clean fields
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     if (startDate && endDate) {
