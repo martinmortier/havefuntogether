@@ -5,7 +5,7 @@ import {
   GridSelectionModel,
 } from "@mui/x-data-grid"
 import { Button } from "@mui/material"
-import { Dispatch, useEffect, useState } from "react"
+import { Dispatch, useEffect, useState, useCallback } from "react"
 import axios, { AxiosResponse } from "axios"
 import { Event } from ".prisma/client"
 import moment from "moment"
@@ -18,6 +18,7 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
   const [columns, setColumns] = useState<GridColDef[]>()
   const [rows, setRows] = useState<GridRowsProp>()
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>()
+
   const getData = async () => {
     try {
       const response: AxiosResponse = await axios.get(apiURL)
@@ -51,10 +52,10 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
     }
   }
   // TODO:Test it
-  const deleteEvent = async (eventId: number): Promise<void> => {
-    if (!eventId) return
+  const deleteEvent = async (eventsId: number[]): Promise<void> => {
+    if (!eventsId || eventsId.length === 0) return
     try {
-      const response = await axios.delete(`${apiURL}/${eventId}`)
+      const response = await axios.delete(`${apiURL}`, { data: eventsId })
       console.log(response.data)
     } catch (error: unknown) {
       console.log(error)
@@ -62,18 +63,23 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
   }
 
   const handleDelete = (selection: GridSelectionModel | undefined): void => {
-    if (selection === undefined || selection.length === 0) return
+    if (!selection || selection.length === 0) return
     const selectionNumber: Array<number> = selection as Array<number>
-    selectionNumber.map((id: number) => {
-      if (rows === undefined || rows.length === 0) return
-      const event: Event = rows[id] as Event
-      deleteEvent(event.idEvent)
-    })
+    const eventsSelected = rows
+      ?.filter((row) => selectionNumber.includes(row.id))
+      .map((event) => event.idEvent) as Array<number>
+    deleteEvent(eventsSelected)
+    setSelectionModel(undefined)
+    setTimeout(() =>
+      setRows((prevRow) =>
+        prevRow?.filter((row) => !selectionNumber.includes(row.id))
+      )
+    )
   }
 
   useEffect(() => {
     getData()
-  }, [apiURL])
+  }, [])
   // return <> </>
   return (
     <div>

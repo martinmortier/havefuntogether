@@ -27,5 +27,20 @@ export default async function handler(
   } else if (req.method === "GET") {
     const events: EventType = await prisma.event.findMany()
     res.status(200).json(events)
+  } else if (req.method === "DELETE") {
+    const [...idEvents]: Array<number> = req.body
+    try {
+      idEvents.map(
+        async (id: number) =>
+          await prisma.event.delete({
+            where: {
+              idEvent: id,
+            },
+          })
+      )
+      res.status(200).json(`Events with id ${idEvents} deleted`)
+    } catch (error: unknown) {
+      console.log(error)
+    }
   }
 }
