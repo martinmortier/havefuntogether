@@ -1,4 +1,5 @@
 import { useState } from "react"
+import Dashboard from "../../pages/dashboard"
 import CreateEvent from "../CreateEvent/CreateEvent"
 import GridOfEvents from "../GridOfEvents/GridOfEvents"
 const MyEventsDashboard = () => {
@@ -14,7 +15,9 @@ const MyEventsDashboard = () => {
           />
         )
       case "CreateEvent":
-        return <CreateEvent />
+        return <CreateEvent setCurrentComponent={setCurrentComponent} />
+      case "MyEventsDashboard":
+        return <MyEventsDashboard />
       default:
         throw new Error("displayComponent: componentName not found")
     }

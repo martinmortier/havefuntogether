@@ -5,7 +5,7 @@ import {
   GridSelectionModel,
 } from "@mui/x-data-grid"
 import { Button } from "@mui/material"
-import { Dispatch, useEffect, useState, useCallback } from "react"
+import { Dispatch, useEffect, useState } from "react"
 import axios, { AxiosResponse } from "axios"
 import { Event } from ".prisma/client"
 import moment from "moment"

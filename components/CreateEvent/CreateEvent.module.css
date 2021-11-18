@@ -23,3 +23,8 @@
 .form > div {
   padding: 15px;
 }
+
+.previousPageContainer {
+  display: flex;
+  justify-content: flex-end;
+}
