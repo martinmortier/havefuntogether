@@ -9,19 +9,27 @@ import { Dispatch, useEffect, useState } from "react"
 import axios, { AxiosResponse } from "axios"
 import { Event } from ".prisma/client"
 import moment from "moment"
+import { UserProfile } from "@auth0/nextjs-auth0"
 type GridOfEventsProps = {
   apiURL: string
   setCurrentComponent: Dispatch<string>
+  user?: UserProfile
 }
-const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
+const GridOfEvents = ({
+  apiURL,
+  setCurrentComponent,
+  user,
+}: GridOfEventsProps) => {
   const [data, setData] = useState<Event[]>()
   const [columns, setColumns] = useState<GridColDef[]>()
   const [rows, setRows] = useState<GridRowsProp>()
   const [selectionModel, setSelectionModel] = useState<GridSelectionModel>()
 
   const getData = async () => {
+    let response: AxiosResponse
     try {
-      const response: AxiosResponse = await axios.get(apiURL)
+      if (user) response = await axios.get(`${apiURL}?idCreator=${user?.sub}`)
+      else response = await axios.get(apiURL)
       setData(response.data)
       if (response.data) {
         setRows(getRowsFromObject(response.data))
@@ -80,19 +88,27 @@ const GridOfEvents = ({ apiURL, setCurrentComponent }: GridOfEventsProps) => {
   useEffect(() => {
     getData()
   }, [])
-  // return <> </>
+
   return (
-    <div>
-      <Button
-        variant="contained"
-        onClick={() => setCurrentComponent("CreateEvent")}
-      >
-        Create a new event
-      </Button>
-      <Button variant="contained" onClick={() => handleDelete(selectionModel)}>
-        Delete event(s) selected
-      </Button>
-      {displayDataGrid()}
+    <div style={{ display: "flex", alignContent: "center", height: "100vh" }}>
+      <div style={{ alignSelf: "center", width: "100%" }}>
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <Button
+            variant="contained"
+            onClick={() => setCurrentComponent("CreateEvent")}
+          >
+            Create a new event
+          </Button>
+          <Button
+            variant="contained"
+            onClick={() => handleDelete(selectionModel)}
+            sx={{ alignSelf: "flex-end" }}
+          >
+            Delete event(s) selected
+          </Button>
+        </div>
+        {displayDataGrid()}
+      </div>
     </div>
   )
 }
@@ -106,6 +122,7 @@ export const getColumnsFromObject = (event: Event): GridColDef[] => {
     headerName: keyObject.charAt(0).toUpperCase() + keyObject.slice(1), //Convert the first letter in Uppercase
     width: 150,
   }))
+  columns.pop() //Remove id creator
   return columns
 }
 //TODO: Need to be tested
@@ -115,8 +132,8 @@ export const getRowsFromObject = (events: Event[]): GridRowsProp => {
     idEvent: event.idEvent,
     name: event.name,
     place: event.place,
-    startDate: moment(event.startDate).format("DD MMM YYYY"),
-    endDate: moment(event.endDate).format("DD MMM YYYY"),
+    startDate: moment(event.startDate).format("DD MMM YYYY HH:mm"),
+    endDate: moment(event.endDate).format("DD MMM YYYY HH:mm"),
   }))
   return rows
 }

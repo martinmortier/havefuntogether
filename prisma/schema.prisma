@@ -13,4 +13,5 @@ model Event {
   place     String   @db.VarChar(45)
   startDate DateTime @db.DateTime(0)
   endDate   DateTime @db.DateTime(0)
+  idCreator String   @db.Text
 }

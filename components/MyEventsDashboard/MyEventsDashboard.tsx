@@ -1,8 +1,10 @@
+import { useUser } from "@auth0/nextjs-auth0"
 import { useState } from "react"
 import Dashboard from "../../pages/dashboard"
 import CreateEvent from "../CreateEvent/CreateEvent"
 import GridOfEvents from "../GridOfEvents/GridOfEvents"
 const MyEventsDashboard = () => {
+  const { user } = useUser()
   const [currentComponent, setCurrentComponent] =
     useState<string>("GridOfEvents")
   const displayComponent = (componentName: string): JSX.Element => {
@@ -12,10 +14,17 @@ const MyEventsDashboard = () => {
           <GridOfEvents
             apiURL="/api/event"
             setCurrentComponent={setCurrentComponent}
+            user={user}
           />
         )
       case "CreateEvent":
-        return <CreateEvent setCurrentComponent={setCurrentComponent} />
+        if (user)
+          return (
+            <CreateEvent
+              setCurrentComponent={setCurrentComponent}
+              user={user}
+            />
+          )
       case "MyEventsDashboard":
         return <MyEventsDashboard />
       default:

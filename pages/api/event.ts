@@ -10,7 +10,7 @@ export default async function handler(
   res: NextApiResponse<EventType | string>
 ) {
   if (req.method === "POST") {
-    const { name, place, startDate, endDate } = req.body
+    const { name, place, startDate, endDate, idCreator } = req.body
     try {
       const newEvent: EventType = await prisma.event.create({
         data: {
@@ -18,6 +18,7 @@ export default async function handler(
           place: place,
           startDate: startDate,
           endDate: endDate,
+          idCreator: idCreator,
         },
       })
       res.status(200).json(newEvent)
@@ -25,8 +26,18 @@ export default async function handler(
       res.status(500).json(`${error}`)
     }
   } else if (req.method === "GET") {
-    const events: EventType = await prisma.event.findMany()
-    res.status(200).json(events)
+    if (!req.query) {
+      const events: EventType = await prisma.event.findMany()
+      res.status(200).json(events)
+    } else {
+      const { idCreator } = req.query
+      const event: EventType = await prisma.event.findMany({
+        where: {
+          idCreator: idCreator as string,
+        },
+      })
+      res.status(200).json(event)
+    }
   } else if (req.method === "DELETE") {
     const [...idEvents]: Array<number> = req.body
     try {

@@ -5,11 +5,13 @@ import axios from "axios"
 import DateAdapter from "@mui/lab/AdapterMoment"
 import { LocalizationProvider, DateTimePicker } from "@mui/lab"
 import { Event } from ".prisma/client"
+import { UserProfile } from "@auth0/nextjs-auth0"
 
 type CreateEventProps = {
   setCurrentComponent: Dispatch<string>
+  user: UserProfile
 }
-const CreateEvent = ({ setCurrentComponent }: CreateEventProps) => {
+const CreateEvent = ({ setCurrentComponent, user }: CreateEventProps) => {
   const [name, setName] = useState<string>("")
   const [startDate, setStartDate] = useState<Date | null>(null)
   const [endDate, setEndDate] = useState<Date | null>(null)
@@ -29,7 +31,7 @@ const CreateEvent = ({ setCurrentComponent }: CreateEventProps) => {
     setPlace("")
   }
 
-  //TODO:Test API + Clean fields
+  //TODO:Test API
   const handleSubmit = async (e: FormEvent<HTMLFormElement>): Promise<void> => {
     e.preventDefault()
     if (startDate && endDate) {
@@ -39,6 +41,7 @@ const CreateEvent = ({ setCurrentComponent }: CreateEventProps) => {
         place: place,
         startDate: startDate,
         endDate: endDate,
+        idCreator: user?.sub as string,
       }
       try {
         await axios.post("/api/event", newEvent)
