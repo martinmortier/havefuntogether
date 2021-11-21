@@ -1,6 +1,12 @@
 import styles from "./CreateEvent.module.css"
 import { Button, TextField, Alert, AlertColor, Typography } from "@mui/material"
-import { ChangeEvent, Dispatch, FormEvent, useState } from "react"
+import {
+  ChangeEvent,
+  Dispatch,
+  FormEvent,
+  SetStateAction,
+  useState,
+} from "react"
 import axios from "axios"
 import DateAdapter from "@mui/lab/AdapterMoment"
 import { LocalizationProvider, DateTimePicker } from "@mui/lab"
@@ -8,7 +14,7 @@ import { Event } from ".prisma/client"
 import { UserProfile } from "@auth0/nextjs-auth0"
 
 type CreateEventProps = {
-  setCurrentComponent: Dispatch<string>
+  setCurrentComponent: Dispatch<SetStateAction<string>>
   user: UserProfile
 }
 const CreateEvent = ({ setCurrentComponent, user }: CreateEventProps) => {
